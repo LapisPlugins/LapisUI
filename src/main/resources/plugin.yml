@@ -1,0 +1,6 @@
+name: LapisUI
+version: ${project.version}
+main: net.lapismc.lapisui.LapisUI
+api-version: 1.13
+authors: [Dart2112]
+description: UI Menu library for Spigot
