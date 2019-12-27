@@ -2,14 +2,16 @@ package net.lapismc.lapisui.menu;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.lapismc.lapisui.LapisUI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public abstract class Menu<T> {
+public abstract class Menu<T> implements InventoryHolder {
 
     //The list of items to be displayed in the UI
     protected List<T> list;
@@ -24,11 +26,18 @@ public abstract class Menu<T> {
     @Setter
     protected int size;
     //The inventory shown to the player
-    @Getter
     Inventory inv;
 
     public Menu(List<T> list) {
         this.list = list;
+    }
+
+    @Override
+    /**
+     * Override get inventory from {@link InventoryHolder}
+     */
+    public Inventory getInventory() {
+        return inv;
     }
 
     /**
@@ -43,10 +52,18 @@ public abstract class Menu<T> {
      */
     protected abstract void onItemClick(T item);
 
+    public void triggerItemClick(int position) {
+        if (position >= list.size())
+            //This is to stop from clicking air that would throw an index out of bounds
+            return;
+        onItemClick(list.get(position));
+    }
+
     public void showTo(Player p) {
         updateList();
         update();
         p.openInventory(inv);
+        LapisUI.openMenus.put(p.getUniqueId(), this);
     }
 
     /**
@@ -54,7 +71,7 @@ public abstract class Menu<T> {
      */
     public void update() {
         if (inv == null || inv.getSize() != size) {
-            inv = Bukkit.createInventory(null, size, title);
+            inv = Bukkit.createInventory(this, size, title);
         }
         for (int i = 0; i < size; i++) {
             if (items.size() >= i)
