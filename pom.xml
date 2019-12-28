@@ -7,7 +7,6 @@
     <groupId>net.lapismc</groupId>
     <artifactId>LapisUI</artifactId>
     <version>0.1.0</version>
-    <packaging>jar</packaging>
 
     <name>LapisUI</name>
 
@@ -18,7 +17,7 @@
     </properties>
 
     <build>
-        <defaultGoal>clean package</defaultGoal>
+        <defaultGoal>clean install</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -45,6 +44,19 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -67,11 +79,6 @@
             <artifactId>spigot-api</artifactId>
             <version>1.15-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.lapismc</groupId>
-            <artifactId>LapisCore</artifactId>
-            <version>1.7.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
