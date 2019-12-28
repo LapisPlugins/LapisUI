@@ -90,6 +90,7 @@ public abstract class Menu<T> implements InventoryHolder {
      * Draws the ItemStacks into the inventory from the items list
      */
     public void update() {
+        inv.clear();
         for (int i = 0; i < size; i++) {
             if (items.size() >= i)
                 inv.setItem(i, items.get(i));
@@ -107,8 +108,8 @@ public abstract class Menu<T> implements InventoryHolder {
             //Size code from https://stackoverflow.com/a/19173890
             inv = Bukkit.createInventory(this, (size >= 54) ? 54 : size + (9 - size % 9) * Math.min(1, size % 9), title);
         }
-        for (int i = 0; i < list.size(); i++) {
-            items.add(toItemStack(list.get(i)));
+        for (T t : list) {
+            items.add(toItemStack(t));
         }
     }
 
