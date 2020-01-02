@@ -92,7 +92,7 @@ public abstract class Menu<T> implements InventoryHolder {
     public void update() {
         inv.clear();
         for (int i = 0; i < size; i++) {
-            if (items.size() >= i)
+            if (items.size() > i)
                 inv.setItem(i, items.get(i));
         }
     }

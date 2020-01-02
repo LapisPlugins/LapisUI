@@ -29,11 +29,15 @@ public abstract class MultiPage<T> extends Menu<T> {
         this.rows = rows;
         //Calculate how many pages we will need
         itemsPerPage = rows * 9;
-        pages = (int) Math.ceil(list.size() / itemsPerPage);
+        pages = (int) Math.ceil(list.size() / (float) itemsPerPage);
         //Load in the first page
         updateCurrentPage();
-        //Set the size based on rows
-        setSize((rows + 1) * 9);
+        //Set the size based on rows, remove extra row if its just one page
+        if (pages == 1) {
+            setSize(rows * 9);
+        } else {
+            setSize((rows + 1) * 9);
+        }
     }
 
     /**
@@ -45,7 +49,7 @@ public abstract class MultiPage<T> extends Menu<T> {
         super.updateList();
         if (pages > 1) {
             //Check if the current page is a full page and add air items if it isn't
-            while (getItems().size() > rows * 9) {
+            while (getItems().size() < rows * 9) {
                 getItems().add(new ItemStack(Material.AIR));
             }
             //Add the previous button
@@ -55,7 +59,7 @@ public abstract class MultiPage<T> extends Menu<T> {
             previousPagePosition = getItems().size();
             getItems().add(previousButton);
             //Add air for spacers
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 7; i++) {
                 getItems().add(new ItemStack(Material.AIR));
             }
             //Add the next button
@@ -69,6 +73,7 @@ public abstract class MultiPage<T> extends Menu<T> {
             nextPagePosition = itemsPerPage + 10;
             previousPagePosition = itemsPerPage + 10;
         }
+        update();
     }
 
     /**
@@ -78,7 +83,7 @@ public abstract class MultiPage<T> extends Menu<T> {
         currentDisplay.clear();
         //Work out which items we need to pull from the master list based on current page number
         int startIndex = itemsPerPage * (currentPage - 1);
-        int endIndex = Math.max(itemsPerPage * currentPage, allItems.size());
+        int endIndex = Math.min(itemsPerPage * currentPage, allItems.size());
         //Get the items from the master list and load them into the current display list
         for (int i = startIndex; i < endIndex; i++) {
             currentDisplay.add(allItems.get(i));
@@ -103,7 +108,7 @@ public abstract class MultiPage<T> extends Menu<T> {
             }
         } else if (position == previousPagePosition) {
             //Make sure there is a previous page
-            if (currentPage > 0) {
+            if (currentPage > 1) {
                 currentPage--;
                 updateList();
             }
