@@ -1,6 +1,10 @@
 package net.lapismc.lapisui.menu;
 
+import net.lapismc.lapiscore.utils.CompatibleMaterial;
+import net.lapismc.lapiscore.utils.LapisItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +13,7 @@ public abstract class MultiPage<T> extends Menu<T> {
 
     List<T> allItems;
     List<T> currentDisplay = new ArrayList<>();
-    int currentPage = 0;
+    int currentPage = 1;
     int rows, itemsPerPage, pages;
     int nextPagePosition, previousPagePosition;
 
@@ -26,17 +30,8 @@ public abstract class MultiPage<T> extends Menu<T> {
         //Calculate how many pages we will need
         itemsPerPage = rows * 9;
         pages = (int) Math.ceil(list.size() / itemsPerPage);
-        //Shorten list to fit the UI based on itemsPerPage
-        if (pages > 1) {
-            //Get the first page of items
-            for (int i = 0; i < itemsPerPage; i++) {
-                currentDisplay.add(allItems.get(i));
-            }
-        } else {
-            currentDisplay.addAll(allItems);
-        }
-        //Send the first page through to the menu
-        setList(currentDisplay);
+        //Load in the first page
+        updateCurrentPage();
         //Set the size based on rows
         setSize((rows + 1) * 9);
     }
@@ -46,15 +41,50 @@ public abstract class MultiPage<T> extends Menu<T> {
      */
     @Override
     public void updateList() {
-        setSize(getList().size());
+        updateCurrentPage();
         super.updateList();
         if (pages > 1) {
-            //TODO: add page buttons and store their positions in nextPagePosition and previousPagePosition
+            //Check if the current page is a full page and add air items if it isn't
+            while (getItems().size() > rows * 9) {
+                getItems().add(new ItemStack(Material.AIR));
+            }
+            //Add the previous button
+            ItemStack previousButton = new LapisItemBuilder(CompatibleMaterial.WHITE_WOOL.parseMaterial())
+                    .setName("Previous Page").setLore("Takes you to the last page", "If there is one")
+                    .setWoolColor(LapisItemBuilder.WoolColor.RED).build();
+            previousPagePosition = getItems().size();
+            getItems().add(previousButton);
+            //Add air for spacers
+            for (int i = 0; i < 8; i++) {
+                getItems().add(new ItemStack(Material.AIR));
+            }
+            //Add the next button
+            ItemStack nextButton = new LapisItemBuilder(CompatibleMaterial.WHITE_WOOL.parseMaterial())
+                    .setName("Next Page").setLore("Takes you to the next page", "If there is one")
+                    .setWoolColor(LapisItemBuilder.WoolColor.GREEN).build();
+            nextPagePosition = getItems().size();
+            getItems().add(nextButton);
         } else {
             //Since its one page we make the buttons outside the inventory so they cant be triggered
             nextPagePosition = itemsPerPage + 10;
             previousPagePosition = itemsPerPage + 10;
         }
+    }
+
+    /**
+     * Load the raw items that should be in the current page
+     */
+    public void updateCurrentPage() {
+        currentDisplay.clear();
+        //Work out which items we need to pull from the master list based on current page number
+        int startIndex = itemsPerPage * (currentPage - 1);
+        int endIndex = Math.max(itemsPerPage * currentPage, allItems.size());
+        //Get the items from the master list and load them into the current display list
+        for (int i = startIndex; i < endIndex; i++) {
+            currentDisplay.add(allItems.get(i));
+        }
+        //Set this to the list in menu
+        setList(currentDisplay);
     }
 
     /**
@@ -68,12 +98,14 @@ public abstract class MultiPage<T> extends Menu<T> {
         if (position == nextPagePosition) {
             //Make sure there is a next page
             if (currentPage < pages) {
-                //TODO: load the next page
+                currentPage++;
+                updateList();
             }
         } else if (position == previousPagePosition) {
             //Make sure there is a previous page
             if (currentPage > 0) {
-                //TODO: load the previous page
+                currentPage--;
+                updateList();
             }
         } else {
             //If its not one of our buttons we parse it back to the super class to process a normal click
