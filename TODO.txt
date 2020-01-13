@@ -1,9 +1,3 @@
-Compatible Material based UI
-Heads support
-Random wool color support
+Try to seperate from LapisCore or compile LapisCore material class so that it can be used outside of LapisCore plugins without breaking
 
-Single page UIs
-Paged UIs
-w/ adaptive sizes
-
-Methods when items are clicked
+Heads support (Based on username/UUID) (This could be useful for next/previous buttons being easier to understand)
