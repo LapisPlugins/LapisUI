@@ -18,6 +18,7 @@
 
     <build>
         <defaultGoal>clean install</defaultGoal>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -81,10 +82,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.lapismc</groupId>
-            <artifactId>LapisCore</artifactId>
-            <version>1.7.5</version>
-            <scope>provided</scope>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

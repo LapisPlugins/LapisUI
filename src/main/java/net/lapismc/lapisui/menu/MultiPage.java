@@ -1,7 +1,7 @@
 package net.lapismc.lapisui.menu;
 
-import net.lapismc.lapiscore.compatibility.XMaterial;
-import net.lapismc.lapiscore.utils.LapisItemBuilder;
+import net.lapismc.lapisui.utils.LapisItemBuilder;
+import net.lapismc.lapisui.utils.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
