@@ -1,8 +1,6 @@
 # LapisUI
 
 This is an API for creating item-based UIs in Spigot plugins
-Currently it does require Lapis Core to be included, this could be changed manually to have the required classes compiled with the code so that it
-can be used without Lapis Core
 
 ## Disclaimer
 
