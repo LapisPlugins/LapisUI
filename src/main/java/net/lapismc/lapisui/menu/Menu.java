@@ -82,7 +82,8 @@ public abstract class Menu<T> implements InventoryHolder {
     public void showTo(Player p) {
         updateList();
         update();
-        p.openInventory(inv);
+        //Run synchronously so that everything else can be run in an async task
+        Bukkit.getScheduler().runTask(LapisUI.plugin, () -> p.openInventory(inv));
         LapisUI.openMenus.put(p.getUniqueId(), this);
     }
 
