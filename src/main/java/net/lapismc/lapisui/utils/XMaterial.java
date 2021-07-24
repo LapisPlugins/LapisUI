@@ -29,8 +29,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -1234,7 +1232,7 @@ public enum XMaterial {
      * @see #isNewVersion()
      * @since 2.0.0
      */
-    @Nonnull
+
     public static MinecraftVersion getVersion() {
         return VERSION;
     }
@@ -1246,8 +1244,7 @@ public enum XMaterial {
      * @see #matchDefinedXMaterial(String, byte)
      * @since 1.0.0
      */
-    @Nullable
-    private static XMaterial requestOldXMaterial(@Nonnull String name, byte data) {
+    private static XMaterial requestOldXMaterial(String name, byte data) {
         String holder = name + data;
         XMaterial material = NAME_CACHE.getIfPresent(holder);
         if (material != null) return material;
@@ -1275,7 +1272,7 @@ public enum XMaterial {
      * @see #containsLegacy(String)
      * @since 1.0.0
      */
-    public static boolean contains(@Nonnull String name) {
+    public static boolean contains(String name) {
         Validate.notEmpty(name, "Cannot check for null or empty material name");
         name = format(name);
 
@@ -1294,7 +1291,7 @@ public enum XMaterial {
      * @see #anyMatchLegacy(String)
      * @since 2.0.0
      */
-    public static boolean containsLegacy(@Nonnull String name) {
+    public static boolean containsLegacy(String name) {
         Validate.notEmpty(name, "Cannot check legacy names for null or empty material name");
         return LEGACY_VALUES.contains(format(name));
     }
@@ -1305,8 +1302,8 @@ public enum XMaterial {
      * @see #matchXMaterial(String, byte)
      * @since 2.0.0
      */
-    @Nonnull
-    public static Optional<XMaterial> matchXMaterial(@Nonnull String name) {
+
+    public static Optional<XMaterial> matchXMaterial(String name) {
         return matchXMaterial(name, (byte) -1);
     }
 
@@ -1324,8 +1321,8 @@ public enum XMaterial {
      * @see #matchXMaterial(ItemStack)
      * @since 2.0.0
      */
-    @Nonnull
-    public static Optional<XMaterial> matchXMaterial(@Nonnull String name, byte data) {
+
+    public static Optional<XMaterial> matchXMaterial(String name, byte data) {
         Validate.notEmpty(name, "Cannot match a material with null or empty material name");
         Optional<XMaterial> oldMatch = matchXMaterialWithData(name);
         if (oldMatch.isPresent()) return oldMatch;
@@ -1372,8 +1369,8 @@ public enum XMaterial {
      * @see #matchXMaterial(ItemStack)
      * @since 2.0.0
      */
-    @Nonnull
-    public static XMaterial matchXMaterial(@Nonnull Material material) {
+
+    public static XMaterial matchXMaterial(Material material) {
         Objects.requireNonNull(material, "Cannot match null material");
         return matchDefinedXMaterial(material.name(), (byte) -1)
                 .orElseThrow(() -> new IllegalArgumentException("Unsupported Material: " + material));
@@ -1388,9 +1385,9 @@ public enum XMaterial {
      * @see #matchDefinedXMaterial(String, byte)
      * @since 2.0.0
      */
-    @Nonnull
+
     @SuppressWarnings("deprecation")
-    public static XMaterial matchXMaterial(@Nonnull ItemStack item) {
+    public static XMaterial matchXMaterial(ItemStack item) {
         Objects.requireNonNull(item, "Cannot match null ItemStack");
         String material = item.getType().name();
         return matchDefinedXMaterial(material,
@@ -1411,8 +1408,8 @@ public enum XMaterial {
      * @see #matchXMaterial(ItemStack)
      * @since 3.0.0
      */
-    @Nonnull
-    private static Optional<XMaterial> matchDefinedXMaterial(@Nonnull String name, byte data) {
+
+    private static Optional<XMaterial> matchDefinedXMaterial(String name, byte data) {
         boolean duplicated = isDuplicated(name);
 
         // Do basic number and boolean checks before accessing more complex enum stuff.
@@ -1445,7 +1442,7 @@ public enum XMaterial {
      * @see #isDuplicated()
      * @since 2.0.0
      */
-    public static boolean isDuplicated(@Nonnull String name) {
+    public static boolean isDuplicated(String name) {
         Validate.notEmpty(name, "Cannot check duplication for null or empty material name");
         name = format(name);
 
@@ -1465,7 +1462,7 @@ public enum XMaterial {
      * @see #matchXMaterial(ItemStack)
      * @since 2.0.0
      */
-    @Nonnull
+
     public static Optional<XMaterial> matchXMaterial(int id, byte data) {
         if (id < 0 || data < 0) return Optional.empty();
 
@@ -1484,8 +1481,7 @@ public enum XMaterial {
      * @throws IllegalArgumentException may be thrown. If thrown, it's a bug.
      * @since 2.0.0
      */
-    @Nullable
-    private static XMaterial requestDuplicatedXMaterial(@Nonnull String name, byte data) {
+    private static XMaterial requestDuplicatedXMaterial(String name, byte data) {
         XMaterial mat = requestOldXMaterial(name, data);
         // If ends with "S" -> Plural Form Material
         return mat.name().charAt(mat.name().length() - 1) == 'S' ? Enums.getIfPresent(XMaterial.class, name).orNull() : mat;
@@ -1499,8 +1495,8 @@ public enum XMaterial {
      * @see #getXMaterialIfDuplicated(String)
      * @since 2.0.0
      */
-    @Nonnull
-    public static Optional<XMaterial> getNewXMaterialIfDuplicated(@Nonnull String name) {
+
+    public static Optional<XMaterial> getNewXMaterialIfDuplicated(String name) {
         Validate.notEmpty(name, "Cannot get new duplicated material for null or empty material name");
         name = format(name);
 
@@ -1517,8 +1513,7 @@ public enum XMaterial {
      * @see #matchXMaterial(String, byte)
      * @since 2.0.0
      */
-    @Nullable
-    public static XMaterial getXMaterialIfDuplicated(@Nonnull String name) {
+    public static XMaterial getXMaterialIfDuplicated(String name) {
         Validate.notEmpty(name, "Cannot get duplicated material for null or empty material name");
         name = format(name);
 
@@ -1537,8 +1532,8 @@ public enum XMaterial {
      * @return a Material enum name.
      * @since 2.0.0
      */
-    @Nonnull
-    private static String format(@Nonnull String name) {
+
+    private static String format(String name) {
         return FORMAT_PATTERN.matcher(
                 name.trim().replace('-', '_').replace(' ', '_')).replaceAll("").toUpperCase(Locale.ENGLISH);
     }
@@ -1550,7 +1545,7 @@ public enum XMaterial {
      * @return the material name with the version removed.
      * @since 2.0.0
      */
-    @Nonnull
+
     private static String parseLegacyMaterialName(String name) {
         int index = name.indexOf('/');
         return index == -1 ? name : name.substring(0, index);
@@ -1563,7 +1558,7 @@ public enum XMaterial {
      * @return true of the version is equal or higher than the current version.
      * @since 2.0.0
      */
-    public static boolean isVersionOrHigher(@Nonnull MinecraftVersion version) {
+    public static boolean isVersionOrHigher(MinecraftVersion version) {
         Objects.requireNonNull(version, "Cannot compare to a null version");
         return VERSION.ordinal() >= version.ordinal();
     }
@@ -1575,8 +1570,8 @@ public enum XMaterial {
      * @see #toWord(String)
      * @since 2.1.0
      */
-    @Nonnull
-    public static String toWord(@Nonnull Material material) {
+
+    public static String toWord(Material material) {
         Objects.requireNonNull(material, "Cannot translate a null material to a word");
         return toWord(material.name());
     }
@@ -1596,8 +1591,8 @@ public enum XMaterial {
      * @return a cleaned more readable enum name.
      * @since 2.1.0
      */
-    @Nonnull
-    private static String toWord(@Nonnull String name) {
+
+    private static String toWord(String name) {
         return WordUtils.capitalize(name.replace('_', ' ').toLowerCase(Locale.ENGLISH));
     }
 
@@ -1608,8 +1603,8 @@ public enum XMaterial {
      * @return the exact major version, or {@link MinecraftVersion#UNKNOWN} if unknown or unsupported.
      * @since 2.0.0
      */
-    @Nonnull
-    public static String getMajorVersion(@Nonnull String version) {
+
+    public static String getMajorVersion(String version) {
         Validate.notEmpty(version, "Cannot get exact major minecraft version for null or empty version");
 
         // getBukkitVersion()
@@ -1634,8 +1629,8 @@ public enum XMaterial {
      * @return the Minecraft version represented by the string.
      * @since 2.0.0
      */
-    @Nonnull
-    public static MinecraftVersion valueOfVersion(@Nonnull String version) {
+
+    public static MinecraftVersion valueOfVersion(String version) {
         Validate.notEmpty(version, "Cannot get minecraft version for null or empty version");
 
         version = getMajorVersion(version);
@@ -1654,7 +1649,7 @@ public enum XMaterial {
      * @see #isDamageable()
      * @since 1.0.0
      */
-    public static boolean isDamageable(@Nonnull String name) {
+    public static boolean isDamageable(String name) {
         Objects.requireNonNull(name, "Material name cannot be null");
         for (String damageable : DAMAGEABLE)
             if (name.contains(damageable)) return true;
@@ -1702,7 +1697,7 @@ public enum XMaterial {
      * @return true if one of the given material names is similar to the base material.
      * @since 3.1.1
      */
-    public static boolean isOneOf(@Nonnull Material material, @Nullable List<String> materials) {
+    public static boolean isOneOf(Material material, List<String> materials) {
         if (materials == null || materials.isEmpty()) return false;
         Objects.requireNonNull(material, "Cannot match materials with a null material");
         String name = material.name();
@@ -1735,7 +1730,7 @@ public enum XMaterial {
      * @return the Minecraft version which tihs material was added in.
      * @since 3.0.0
      */
-    @Nonnull
+
     public MinecraftVersion getMaterialVersion() {
         if (this.legacy.length == 0) return MinecraftVersion.UNKNOWN;
         String version = this.legacy[0];
@@ -1754,9 +1749,9 @@ public enum XMaterial {
      * @see #parseItem()
      * @since 3.0.0
      */
-    @Nonnull
+
     @SuppressWarnings("deprecation")
-    public ItemStack setType(@Nonnull ItemStack item) {
+    public ItemStack setType(ItemStack item) {
         Objects.requireNonNull(item, "Cannot set material for null ItemStack");
 
         item.setType(this.parseMaterial());
@@ -1773,7 +1768,7 @@ public enum XMaterial {
      * @see #isOneOf(Material, List)
      * @since 3.0.0
      */
-    public boolean isOneOf(@Nullable List<String> materials) {
+    public boolean isOneOf(List<String> materials) {
         Material material = this.parseMaterial();
         if (material == null) return false;
         return isOneOf(material, materials);
@@ -1788,7 +1783,7 @@ public enum XMaterial {
      * @see #containsLegacy(String)
      * @since 2.0.0
      */
-    private boolean anyMatchLegacy(@Nonnull String name) {
+    private boolean anyMatchLegacy(String name) {
         // If it's a new material, everything after this is a suggestion.
         // At least until now except one or two materials.
         if (this.isNew()) return false;
@@ -1845,7 +1840,6 @@ public enum XMaterial {
      * @see #getNewXMaterialIfDuplicated(String)
      * @since 2.0.0
      */
-    @Nullable
     public XMaterial getXMaterialIfDuplicated() {
         return DUPLICATED.get(this);
     }
@@ -1884,7 +1878,7 @@ public enum XMaterial {
      * @return a list of legacy material names and the first element as the version the material was added in if new.
      * @since 1.0.0
      */
-    @Nonnull
+
     public String[] getLegacy() {
         return legacy;
     }
@@ -1898,7 +1892,6 @@ public enum XMaterial {
      * @see #setType(ItemStack)
      * @since 1.0.0
      */
-    @Nullable
     public ItemStack parseItem() {
         return parseItem(false);
     }
@@ -1912,7 +1905,6 @@ public enum XMaterial {
      * @see #setType(ItemStack)
      * @since 2.0.0
      */
-    @Nullable
     @SuppressWarnings("deprecation")
     public ItemStack parseItem(boolean suggest) {
         Material material = this.parseMaterial(suggest);
@@ -1927,7 +1919,6 @@ public enum XMaterial {
      * @see #parseMaterial(boolean)
      * @since 1.0.0
      */
-    @Nullable
     public Material parseMaterial() {
         return parseMaterial(false);
     }
@@ -1940,7 +1931,6 @@ public enum XMaterial {
      * @see #matchXMaterial(String, byte)
      * @since 2.0.0
      */
-    @Nullable
     public Material parseMaterial(boolean suggest) {
         Material mat = PARSED_CACHE.getIfPresent(this);
         if (mat != null) return mat;
@@ -1964,7 +1954,6 @@ public enum XMaterial {
      * @see #parseMaterial(boolean)
      * @since 2.0.0
      */
-    @Nullable
     private Material requestOldMaterial(boolean suggest) {
         boolean noMaterialParse = this.isNew() && !suggest;
         Material material;
@@ -2000,7 +1989,7 @@ public enum XMaterial {
      * @since 1.0.0
      */
     @SuppressWarnings("deprecation")
-    public boolean isSimilar(@Nonnull ItemStack item) {
+    public boolean isSimilar(ItemStack item) {
         Objects.requireNonNull(item, "Cannot compare with null ItemStack");
         if (item.getType() != this.parseMaterial()) return false;
         return (ISFLAT || this.isDamageable()) || item.getDurability() == this.data;
@@ -2014,7 +2003,7 @@ public enum XMaterial {
      * @see #parseMaterial(boolean)
      * @since 2.0.0
      */
-    @Nonnull
+
     public List<String> getSuggestions() {
         return this.isNew() ? Arrays.stream(this.legacy).skip(1).collect(Collectors.toList()) : new ArrayList<>();
     }

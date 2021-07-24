@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"net.lapismc.lapisui.utils","l":"LapisItemBuilder"},{"p":"net.lapismc.lapisui.menu","l":"Menu"},{"p":"net.lapismc.lapisui.menu","l":"MultiPage"},{"p":"net.lapismc.lapisui.menu","l":"SinglePage"},{"p":"net.lapismc.lapisui.utils","l":"LapisItemBuilder.WoolColor"}]
