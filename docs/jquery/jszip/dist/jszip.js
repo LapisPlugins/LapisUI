@@ -481,16 +481,16 @@ var generateDosExternalFileAttr = function (dosPermissions, isDir) {
     return (dosPermissions || 0)  & 0x3F;
 };
 
-        /**
-         * Generate the various parts used in the construction of the final zip file.
-         * @param {Object} streamInfo the hash with information about the compressed file.
-         * @param {Boolean} streamedContent is the content streamed ?
-         * @param {Boolean} streamingEnded is the stream finished ?
-         * @param {number} offset the current offset from the start of the zip file.
-         * @param {String} platform let's pretend we are this platform (change platform dependents fields)
-         * @param {Function} encodeFileName the function to encode the file name / comment.
-         * @return {Object} the zip parts.
-         */
+/**
+ * Generate the various parts used in the construction of the final zip file.
+ * @param {Object} streamInfo the hash with information about the compressed file.
+ * @param {Boolean} streamedContent is the content streamed ?
+ * @param {Boolean} streamingEnded is the stream finished ?
+ * @param {number} offset the current offset from the start of the zip file.
+ * @param {String} platform let's pretend we are this platform (change platform dependents fields)
+ * @param {Function} encodeFileName the function to encode the file name / comment.
+ * @return {Object} the zip parts.
+ */
 var generateZipParts = function(streamInfo, streamedContent, streamingEnded, offset, platform, encodeFileName) {
     var file = streamInfo['file'],
     compression = streamInfo['compression'],
@@ -1118,16 +1118,16 @@ function checkEntryCRC32(zipEntry) {
                     var zipEntries = new ZipEntries(options);
                     zipEntries.load(data);
                     return zipEntries;
-        }).then(function checkCRC32(zipEntries) {
-            var promises = [external.Promise.resolve(zipEntries)];
-            var files = zipEntries.files;
-            if (options.checkCRC32) {
-                for (var i = 0; i < files.length; i++) {
-                    promises.push(checkEntryCRC32(files[i]));
-                }
-            }
-            return external.Promise.all(promises);
-        }).then(function addFiles(results) {
+                }).then(function checkCRC32(zipEntries) {
+                    var promises = [external.Promise.resolve(zipEntries)];
+                    var files = zipEntries.files;
+                    if (options.checkCRC32) {
+                        for (var i = 0; i < files.length; i++) {
+                            promises.push(checkEntryCRC32(files[i]));
+                        }
+                    }
+                    return external.Promise.all(promises);
+                }).then(function addFiles(results) {
             var zipEntries = results.shift();
             var files = zipEntries.files;
             for (var i = 0; i < files.length; i++) {

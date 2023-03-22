@@ -430,9 +430,9 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
 .overviewSummary caption, .memberSummary caption, .typeSummary caption,
 .useSummary caption, .constantsSummary caption, .deprecatedSummary caption,
 .requiresSummary caption, .packagesSummary caption, .providesSummary caption, .usesSummary caption {
-    position:relative;
-    text-align:left;
-    background-repeat:no-repeat;
+    position: relative;
+    text-align: left;
+    background-repeat: no-repeat;
     color: #253441;
     font-weight: bold;
     clear: none;
@@ -443,12 +443,10 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
     margin: 0px;
     white-space: pre;
 }
-
 .constantsSummary caption a:link, .constantsSummary caption a:visited,
 .useSummary caption a:link, .useSummary caption a:visited {
     color: #1f389c;
 }
-
 .overviewSummary caption a:link, .memberSummary caption a:link, .typeSummary caption a:link,
 .deprecatedSummary caption a:link,
 .requiresSummary caption a:link, .packagesSummary caption a:link, .providesSummary caption a:link,
@@ -776,15 +774,12 @@ ul.ui-autocomplete  li {
     clear:both;
     width:100%;
 }
-
 .resultHighlight {
     font-weight: bold;
 }
-
 .ui-autocomplete .result-item {
     font-size: inherit;
 }
-
 #search {
     background-image: url('resources/glass.png');
     background-size: 13px;

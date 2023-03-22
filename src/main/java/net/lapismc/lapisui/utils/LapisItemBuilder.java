@@ -118,7 +118,7 @@ public class LapisItemBuilder {
         ItemStack i = new ItemStack(mat);
         ItemMeta meta = i.getItemMeta();
         if (meta != null) {
-            if (!name.equals("")) {
+            if (name != null && !name.equals("")) {
                 meta.setDisplayName(name);
             }
             if (owner != null && meta instanceof SkullMeta) {
