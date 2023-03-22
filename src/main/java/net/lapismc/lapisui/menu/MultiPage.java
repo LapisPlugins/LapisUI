@@ -1,7 +1,6 @@
 package net.lapismc.lapisui.menu;
 
 import net.lapismc.lapisui.utils.LapisItemBuilder;
-import net.lapismc.lapisui.utils.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -53,7 +52,7 @@ public abstract class MultiPage<T> extends Menu<T> {
                 getItems().add(new ItemStack(Material.AIR));
             }
             //Add the previous button
-            ItemStack previousButton = new LapisItemBuilder(XMaterial.WHITE_WOOL.parseMaterial())
+            ItemStack previousButton = new LapisItemBuilder(Material.WHITE_WOOL)
                     .setName("Previous Page").setLore("Takes you to the last page", "If there is one")
                     .setWoolColor(LapisItemBuilder.WoolColor.RED).build();
             previousPagePosition = getItems().size();
@@ -63,7 +62,7 @@ public abstract class MultiPage<T> extends Menu<T> {
                 getItems().add(new ItemStack(Material.AIR));
             }
             //Add the next button
-            ItemStack nextButton = new LapisItemBuilder(XMaterial.WHITE_WOOL.parseMaterial())
+            ItemStack nextButton = new LapisItemBuilder(Material.WHITE_WOOL)
                     .setName("Next Page").setLore("Takes you to the next page", "If there is one")
                     .setWoolColor(LapisItemBuilder.WoolColor.GREEN).build();
             nextPagePosition = getItems().size();

@@ -21,7 +21,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.material.MaterialData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +29,6 @@ import java.util.List;
 public class LapisItemBuilder {
 
     Material mat;
-    byte data = 0;
     String name = "";
     int amount = 1;
     OfflinePlayer owner;
@@ -51,7 +49,7 @@ public class LapisItemBuilder {
      * @param offlinePlayer The owner of the head
      */
     public LapisItemBuilder(OfflinePlayer offlinePlayer) {
-        mat = XMaterial.PLAYER_HEAD.parseMaterial();
+        mat = Material.PLAYER_HEAD;
         owner = offlinePlayer;
     }
 
@@ -107,9 +105,7 @@ public class LapisItemBuilder {
      * @return The new {@link LapisItemBuilder}
      */
     public LapisItemBuilder setWoolColor(WoolColor color) {
-        XMaterial compMat = XMaterial.matchXMaterial(color.name() + "_WOOL").get();
-        mat = compMat.parseMaterial();
-        data = compMat.getData();
+        mat = Material.getMaterial(color.name() + "_WOOL");
         return this;
     }
 
@@ -120,11 +116,6 @@ public class LapisItemBuilder {
      */
     public ItemStack build() {
         ItemStack i = new ItemStack(mat);
-        if (data != 0) {
-            MaterialData matData = new MaterialData(mat);
-            matData.setData(data);
-            i.setData(matData);
-        }
         ItemMeta meta = i.getItemMeta();
         if (meta != null) {
             if (!name.equals("")) {
