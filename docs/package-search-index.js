@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"net.lapismc.lapisui.menu"},{"l":"net.lapismc.lapisui.utils"}]

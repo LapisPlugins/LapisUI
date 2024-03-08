@@ -112,7 +112,7 @@ public abstract class MultiPage<T> extends Menu<T> {
                 updateList();
             }
         } else {
-            //If its not one of our buttons we parse it back to the super class to process a normal click
+            //If it's not one of our buttons we parse it back to the super class to process a normal click
             super.triggerItemClick(p, position);
         }
     }

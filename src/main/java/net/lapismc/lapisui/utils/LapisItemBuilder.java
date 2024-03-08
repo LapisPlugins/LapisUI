@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Benjamin Martin
+ * Copyright 2024 Benjamin Martin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,10 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +35,8 @@ public class LapisItemBuilder {
     String name = "";
     int amount = 1;
     OfflinePlayer owner;
+    PotionType potionType;
+    int modelData = 0;
     List<String> lore = new ArrayList<>();
 
     /**
@@ -110,6 +115,28 @@ public class LapisItemBuilder {
     }
 
     /**
+     * Set the type of potion, e.g. regeneration, strength etc.
+     *
+     * @param potionType The potion type to apply
+     * @return the new {@link LapisItemBuilder}
+     */
+    public LapisItemBuilder setPotionType(PotionType potionType) {
+        this.potionType = potionType;
+        return this;
+    }
+
+    /**
+     * Set the custom model data value, used for applying models from resource packs
+     *
+     * @param modelData An integer specifying which model to use for this item
+     * @return the new {@link LapisItemBuilder}
+     */
+    public LapisItemBuilder setCustomModelData(int modelData) {
+        this.modelData = modelData;
+        return this;
+    }
+
+    /**
      * Build the item based on the set variables in the builder
      *
      * @return the ItemStack requested
@@ -124,8 +151,14 @@ public class LapisItemBuilder {
             if (owner != null && meta instanceof SkullMeta) {
                 ((SkullMeta) meta).setOwningPlayer(owner);
             }
+            if (potionType != null && meta instanceof PotionMeta) {
+                ((PotionMeta) meta).setBasePotionData(new PotionData(potionType));
+            }
             if (!lore.isEmpty()) {
                 meta.setLore(lore);
+            }
+            if (modelData != 0) {
+                meta.setCustomModelData(modelData);
             }
             i.setItemMeta(meta);
         }
