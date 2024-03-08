@@ -131,8 +131,9 @@ public abstract class Menu<T> implements InventoryHolder {
      * Override if you want the click position in the UI instead of the item
      * (Is overridden by the paged UI class)
      *
-     * @param p        The player who clicked
-     * @param position The position in the inventory
+     * @param p         The player who clicked
+     * @param position  The position in the inventory
+     * @param clickType The ClickType taken from the InventoryClickEvent
      */
     public void triggerItemClick(Player p, int position, ClickType clickType) {
         if (position >= list.size())
@@ -168,7 +169,6 @@ public abstract class Menu<T> implements InventoryHolder {
 
     /**
      * Updates the items from the parsed in list and puts them into the items list
-     * <p>
      * Should be overridden to add extra items to the end of the list for paged UIs after execution
      */
     public void updateCachedItems() {
