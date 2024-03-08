@@ -173,7 +173,9 @@ public abstract class Menu<T> implements InventoryHolder {
      */
     public void updateCachedItems() {
         items.clear();
-        if (inv == null || inv.getSize() != size) {
+        //Remake the inventory if it needs to be bigger or is null
+        //Otherwise we can simply use the inventory we already have
+        if (inv == null || inv.getSize() < size) {
             //Size code from https://stackoverflow.com/a/19173890
             inv = Bukkit.createInventory(this, (size >= 54) ? 54 : size + (9 - size % 9) * Math.min(1, size % 9), title);
         }
