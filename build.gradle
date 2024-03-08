@@ -21,7 +21,7 @@ plugins {
 
 group = 'net.lapismc'
 archivesBaseName = "LapisUI"
-version = '1.3.0'
+version = '1.4.0'
 description = "A spiritual successor to Designer, build from the ground up to be simple and extendable"
 sourceCompatibility = '17'
 targetCompatibility = '17'

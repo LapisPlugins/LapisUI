@@ -3,6 +3,7 @@ package net.lapismc.lapisui.menu;
 import net.lapismc.lapisui.LapisUI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +25,7 @@ public abstract class Menu<T> implements InventoryHolder {
     private int size;
 
     public Menu(List<T> list) {
+        //TODO: Make titles be set!
         this.list = list;
     }
 
@@ -118,10 +120,11 @@ public abstract class Menu<T> implements InventoryHolder {
     /**
      * Will be called when an item is clicked in the inventory
      *
-     * @param p    The player who clicked the menu item
-     * @param item The item that was clicked
+     * @param p         The player who clicked the menu item
+     * @param item      The item that was clicked
+     * @param clickType The click type captured from the InventoryClickEvent
      */
-    protected abstract void onItemClick(Player p, T item);
+    protected abstract void onItemClick(Player p, T item, ClickType clickType);
 
     /**
      * Called by the listener within LapisUI, should not be called from outside the plugin
@@ -131,11 +134,11 @@ public abstract class Menu<T> implements InventoryHolder {
      * @param p        The player who clicked
      * @param position The position in the inventory
      */
-    public void triggerItemClick(Player p, int position) {
+    public void triggerItemClick(Player p, int position, ClickType clickType) {
         if (position >= list.size())
             //This is to stop from clicking air that would throw an index out of bounds
             return;
-        onItemClick(p, list.get(position));
+        onItemClick(p, list.get(position), clickType);
     }
 
     /**

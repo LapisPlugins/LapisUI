@@ -3,6 +3,7 @@ package net.lapismc.lapisui.menu;
 import net.lapismc.lapisui.utils.LapisItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public abstract class MultiPage<T> extends Menu<T> {
      * @param position The position in the inventory
      */
     @Override
-    public void triggerItemClick(Player p, int position) {
+    public void triggerItemClick(Player p, int position, ClickType clickType) {
         if (position == nextPagePosition) {
             //Make sure there is a next page
             if (currentPage < pages) {
@@ -113,7 +114,7 @@ public abstract class MultiPage<T> extends Menu<T> {
             }
         } else {
             //If it's not one of our buttons we parse it back to the super class to process a normal click
-            super.triggerItemClick(p, position);
+            super.triggerItemClick(p, position, clickType);
         }
     }
 

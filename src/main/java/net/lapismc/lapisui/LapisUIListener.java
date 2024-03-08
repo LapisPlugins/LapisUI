@@ -35,7 +35,7 @@ public class LapisUIListener implements Listener {
         }
         //It's a click in our menu
         e.setCancelled(true);
-        menu.triggerItemClick(p, e.getSlot());
+        menu.triggerItemClick(p, e.getSlot(), e.getClick());
     }
 
     /**
