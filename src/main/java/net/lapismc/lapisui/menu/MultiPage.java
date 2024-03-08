@@ -44,9 +44,9 @@ public abstract class MultiPage<T> extends Menu<T> {
      * Update the size of the inventory based on the number of items in the list before running the main update method
      */
     @Override
-    public void updateList() {
+    public void updateCachedItems() {
         updateCurrentPage();
-        super.updateList();
+        super.updateCachedItems();
         if (pages > 1) {
             //Check if the current page is a full page and add air items if it isn't
             while (getItems().size() < rows * 9) {
@@ -73,7 +73,7 @@ public abstract class MultiPage<T> extends Menu<T> {
             nextPagePosition = itemsPerPage + 10;
             previousPagePosition = itemsPerPage + 10;
         }
-        update();
+        renderItems();
     }
 
     /**
@@ -104,13 +104,13 @@ public abstract class MultiPage<T> extends Menu<T> {
             //Make sure there is a next page
             if (currentPage < pages) {
                 currentPage++;
-                updateList();
+                updateCachedItems();
             }
         } else if (position == previousPagePosition) {
             //Make sure there is a previous page
             if (currentPage > 1) {
                 currentPage--;
-                updateList();
+                updateCachedItems();
             }
         } else {
             //If it's not one of our buttons we parse it back to the super class to process a normal click

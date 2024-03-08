@@ -12,9 +12,9 @@ public abstract class SinglePage<T> extends Menu<T> {
      * Update the size of the inventory based on the number of items in the list before running the main update method
      */
     @Override
-    public void updateList() {
+    public void updateCachedItems() {
         setSize(getList().size());
-        super.updateList();
+        super.updateCachedItems();
     }
 
 }

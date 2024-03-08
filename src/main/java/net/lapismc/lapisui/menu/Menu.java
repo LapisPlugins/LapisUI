@@ -148,8 +148,8 @@ public abstract class Menu<T> implements InventoryHolder {
      * @param p The player to show the menu too
      */
     public void showTo(Player p) {
-        updateList();
-        update();
+        updateCachedItems();
+        renderItems();
         //Run synchronously so that everything else can be run in an async task
         Bukkit.getScheduler().runTask(LapisUI.plugin, () -> p.openInventory(inv));
         LapisUI.openMenus.put(p.getUniqueId(), this);
@@ -158,7 +158,7 @@ public abstract class Menu<T> implements InventoryHolder {
     /**
      * Draws the ItemStacks into the inventory from the items list
      */
-    public void update() {
+    public void renderItems() {
         inv.clear();
         for (int i = 0; i < size; i++) {
             if (items.size() > i)
@@ -171,7 +171,7 @@ public abstract class Menu<T> implements InventoryHolder {
      * <p>
      * Should be overridden to add extra items to the end of the list for paged UIs after execution
      */
-    public void updateList() {
+    public void updateCachedItems() {
         items.clear();
         if (inv == null || inv.getSize() != size) {
             //Size code from https://stackoverflow.com/a/19173890
